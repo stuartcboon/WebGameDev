@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="author" content="Anthony Reid & Stuart Boon">
+    <title>Chekers</title>
+    <script src="library/phaser.min.js"></script>
 </head>
 <body>
-
+    <div id="checkers"></div>
+    <script src="JS/firebase.js"></script>
+    <script src="JS/preload.js"></script>
+    <script src="JS/menu.js"></script>
+    <script src="JS/gameScene.js"></script>
+    <script src="JS/endScene.js"></script>
+    <script>
+        /**
+         * an anonymous self executing function, creates an instance of the Phaser game
+         * and adds the game states, then initialises the first state Preload.
+         */
+        (function(){
+            // creating a new phaser game
+            game = new Phaser.Game('89%', 640, Phaser.auto, 'checkers');
+            //creating the game states
+            game.state.add('MenuS', menuScene);
+            game.state.add('GameS', gameScene);
+            game.state.add('EndS', endScene);
+            //Starting the first state
+            game.state.start("Preload");
+        })();
+    </script>
 </body>
 </html>
