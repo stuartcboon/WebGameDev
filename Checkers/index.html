@@ -22,6 +22,7 @@
             // creating a new phaser game
             game = new Phaser.Game('89%', 640, Phaser.auto, 'checkers');
             //creating the game states
+            game.state.add('Preload', preload);
             game.state.add('MenuS', menuScene);
             game.state.add('GameS', gameScene);
             game.state.add('EndS', endScene);
