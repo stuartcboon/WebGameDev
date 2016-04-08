@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="10" tilewidth="64" tileheight="64" nextobjectid="1">
+ <tileset firstgid="1" name="CheckerTiles" tilewidth="64" tileheight="64" tilecount="9">
+  <image source="../Documents/GitHub/WebGameDev/Checkers/Assets/Images/CheckerTiles.png" trans="ffffff" width="192" height="192"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="10">
+  <data encoding="csv">
+3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,
+3,1,2,1,2,1,2,1,2,3,0,0,0,0,0,0,
+3,2,1,2,1,2,1,2,1,3,0,0,0,0,0,0,
+3,1,2,1,2,1,2,1,2,3,0,0,0,0,0,0,
+3,2,1,2,1,2,1,2,1,3,0,0,0,0,0,0,
+3,1,2,1,2,1,2,1,2,3,0,0,0,0,0,0,
+3,2,1,2,1,2,1,2,1,3,0,0,0,0,0,0,
+3,1,2,1,2,1,2,1,2,3,0,0,0,0,0,0,
+3,2,1,2,1,2,1,2,1,3,0,0,0,0,0,0,
+3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

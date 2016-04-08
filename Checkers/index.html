@@ -5,9 +5,14 @@
     <meta name="author" content="Anthony Reid & Stuart Boon">
     <title>Chekers</title>
     <script src="library/phaser.min.js"></script>
+    <script src="jq/jquery-1.11.2.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
 </head>
 <body>
-    <div id="checkers"></div>
+    <div id="tInput" style="position: absolute; z-index: 1;"></div>
+    <div id="checkers" style="float:left;"></div>
+
+    <script src="JS/constants.js"></script>
     <script src="JS/firebase.js"></script>
     <script src="JS/preload.js"></script>
     <script src="JS/menu.js"></script>
@@ -20,7 +25,7 @@
          */
         (function(){
             // creating a new phaser game
-            game = new Phaser.Game('89%', 640, Phaser.auto, 'checkers');
+            game = new Phaser.Game('100%', 640, Phaser.auto, 'checkers');
             //creating the game states
             game.state.add('Preload', preload);
             game.state.add('MenuS', menuScene);

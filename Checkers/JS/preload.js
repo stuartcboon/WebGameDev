@@ -13,7 +13,7 @@ var preload = function(game){
 
 /**
  * This contains the prototypes for the preload function.
- * @type {{}}
+ * @type {{preload: preload.preload, create: preload.create, menu: preload.menu}}
  */
 preload.prototype = {
     /**
@@ -21,9 +21,10 @@ preload.prototype = {
      * images and audio files
      */
     preload: function(){
-        this.game.load.spritesheet('Tiles','Assets/Images/chechers.png', 32, 32, 4);
-        this.game.load.image('BG','Assets/Images/background.png');
-        this.game.load.spritesheet('Btn','Assets/Images/Buttons.png', 300, 80);
+        this.game.load.tilemap('map', '../Checkers/Assets/Images/CBoard.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.spritesheet('Tiles','../Checkers/Assets/Images/cBoard.png', 32, 32, 4);
+        this.game.load.image('BG','../Checkers/Assets/Images/background.png');
+        this.game.load.spritesheet('Btn','../Checkers/Assets/Images/Buttons/buttons.png', 300, 80);
     },
     /**
      * prototype create calls the required functions, this is called in
