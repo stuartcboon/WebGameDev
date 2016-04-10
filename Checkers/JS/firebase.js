@@ -40,9 +40,13 @@ function updateGame(){
     setOp();
 
     if(locations[gameKey].p1 === name){
+        p1 = name;
+        p2 = opponent;
         myChips = locations[gameKey].p1Chips;
         opChips = locations[gameKey].p2Chips;
     }else{
+        p2 = name;
+        p1 = opponent;
         myChips = locations[gameKey].p2Chips;
         opChips = locations[gameKey].p1Chips;
     }
@@ -101,7 +105,7 @@ function getOpponent(key, name){
 /**
  * creates a new game on the database for an opponent to join, initialises the player chips
  */
-function addLocation(name){
+function addPlayer(name){
     //prevent a duplicate name
     // if(getKey(name)) return;
     // NAME IS VALID - GO AHEAD AND ADD IT...
@@ -133,15 +137,25 @@ function addLocation(name){
 /**
  * updates the game after every turn of the game including the first instance of joining a game.
  */
-function updateLocation(ref,opp,name) {
+function updatePlayers(ref,p1,p2,p1C,p2C) {
     //prevent a duplicate name
     // if (getKey(name)) return;
     // NAME IS VALID - GO AHEAD AND ADD IT...
     fb.child("/location/" + ref).set({
-        p1: opp,
-        p1Chips: [{x:2}],
-        p2: name,
-        p2Chips: [{x:3},{x:4}],
+        p1: p1,
+        p1Chips: [{c:2, r:3, isQueen: false, isDestroyed: false},{c:4, r:3, isQueen: false, isDestroyed: false},
+            {c:6, r:3, isQueen: false, isDestroyed: false},{c:8, r:3, isQueen: false, isDestroyed: false},
+            {c:1, r:2, isQueen: false, isDestroyed: false},{c:3, r:2, isQueen: false, isDestroyed: false},
+            {c:5, r:2, isQueen: false, isDestroyed: false},{c:7, r:2, isQueen: false, isDestroyed: false},
+            {c:2, r:1, isQueen: false, isDestroyed: false},{c:4, r:1, isQueen: false, isDestroyed: false},
+            {c:6, r:1, isQueen: false, isDestroyed: false},{c:8, r:1, isQueen: false, isDestroyed: false}],
+        p2: p2,
+        p2Chips: [{c:1, r:6, isQueen: false, isDestroyed: false},{c:3, r:6, isQueen: false, isDestroyed: false},
+            {c:5, r:6, isQueen: false, isDestroyed: false},{c:7, r:6, isQueen: false, isDestroyed: false},
+            {c:2, r:7, isQueen: false, isDestroyed: false},{c:4, r:7, isQueen: false, isDestroyed: false},
+            {c:6, r:7, isQueen: false, isDestroyed: false},{c:8, r:7, isQueen: false, isDestroyed: false},
+            {c:1, r:8, isQueen: false, isDestroyed: false},{c:3, r:8, isQueen: false, isDestroyed: false},
+            {c:5, r:8, isQueen: false, isDestroyed: false},{c:7, r:8, isQueen: false, isDestroyed: false}],
         status: true,
         winner: "",
         timestamp: Firebase.ServerValue.TIMESTAMP
@@ -158,14 +172,13 @@ function updateLocation(ref,opp,name) {
  * if no game exists then create game.
  */
 function checkForGame(){
-    name = $('#email').val();//document.getElementById("email").value;
+    name = $('#email').val();
     gameKey = getKey();
     if(gameKey !== null){
         opponent = getOpponent(gameKey);
-        updateLocation(gameKey,opponent, name);
+        updatePlayers(gameKey, opponent, name);
     }else {
-        //name = "P1";
-        addLocation(name);
+        addPlayer(name);
     }
     gameKey = setKey();
 }

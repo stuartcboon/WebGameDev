@@ -22,7 +22,7 @@ preload.prototype = {
      */
     preload: function(){
         this.game.load.tilemap('map', '../Checkers/Assets/Images/CBoard.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.spritesheet('Tiles','../Checkers/Assets/Images/cBoard.png', 32, 32, 4);
+        this.game.load.spritesheet('Tiles','../Checkers/Assets/Images/CBoard.png', 64, 64, 5);
         this.game.load.image('BG','../Checkers/Assets/Images/background.png');
         this.game.load.spritesheet('Btn','../Checkers/Assets/Images/Buttons/buttons.png', 300, 80);
     },

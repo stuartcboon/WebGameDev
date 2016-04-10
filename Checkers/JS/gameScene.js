@@ -13,6 +13,8 @@ var gameScene = function(){
     this.btnT;
     this.layers;
     this.map;
+    this.p1T;
+    this.p2T;
 };
 
 /**
@@ -36,11 +38,15 @@ gameScene.prototype = {
         this.createMap();
         this.createBoard();
         this.createButton();
+
     },
     /**
      * update holds the game processes
      */
-    update: function(){},
+    update: function(){
+        this.displayPlayer();
+        this.displayChips();
+    },
     /**
      * create map creates the map for the game board
      */
@@ -66,6 +72,40 @@ gameScene.prototype = {
         this.textSize = this.game.height * 0.07;
         this.btnT = this.game.add.text(this.btn.x, this.btn.y + 10, 'Resign', {font: this.textSize + "px Arial", fill: "#000000"});
         this.btnT.anchor.setTo(0.5,0.5);
+
+    },
+    /**
+     * displayPlayer displays the corresponding player with the correct player 1/2.
+     */
+    displayPlayer: function(){
+
+        if(locations[gameKey].p1 === name){
+            this.p1T =  this.game.add.text(100, 0, name, {font: "40px Arial", fill: "#FFFFFF"});
+            this.p2T =  this.game.add.text(100, this.game.height - 30, opponent, {font: "40px Arial", fill: "#FFFFFF"});
+        }else{
+            this.p1T =  this.game.add.text(100, 0, opponent, {font: "40px Arial", fill: "#FFFFFF"});
+            this.p2T =  this.game.add.text(100, this.game.height - 30, name, {font: "40px Arial", fill: "#FFFFFF"});
+        }
+    },
+    /**
+     * display the plyer and opponent chips on the screen
+     */
+    displayChips: function(){
+        for(var i = 0; i<myChips.length; i++){
+            if(locations[gameKey].p1 === name) {
+                this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 3);
+            }else{
+                this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 4);
+            }
+        }
+        for(var i = 0; i<opChips.length; i++){
+            if(locations[gameKey].p1 === name) {
+                this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 4);
+            }else{
+                this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 3);
+            }
+        }
+
     },
     /**
      * endScene, call the end scene state
