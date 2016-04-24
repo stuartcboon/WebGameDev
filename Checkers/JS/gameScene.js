@@ -15,6 +15,8 @@ var gameScene = function(){
     this.map;
     this.p1T;
     this.p2T;
+    this.chipToMove;
+    this.gBoard;
 };
 
 /**
@@ -30,6 +32,9 @@ gameScene.prototype = {
         this.btnT = null;
         this.layers = [];
         this.map = null;
+        this.chipToMove = null;
+        this.gBoard = boardStruc;
+
     },
     /**
      * create, creates the initial game elements
@@ -46,7 +51,35 @@ gameScene.prototype = {
     update: function(){
         this.displayPlayer();
         this.displayChips();
+        this.mouselocation();
+
     },
+    /**
+     * mouselocation, checks were the mouse pointer is when the mouse button is clicked down. This is then used to
+     * identify if there is a chip belonging to the player. When the player clicks on their chip it is added to the
+     * chipToMove which allows them to select a secondary position to place the piece which is dependent on a true
+     * response from the rules function.
+     */
+    mouselocation: function(){
+        if(game.input.mousePointer.isDown){
+            // check if chip to move if not null, if null check if location has a chip assigned to it.
+            // if not then forget location  chipToMove remains null, else add chip details to chipToMove
+            var mX = game.input.x;
+            var mY = game.input.y;
+            console.log("x: " + mX + " y: " + mY);
+            for(var i=0; i< myChips.length; i++){
+                if(mX > this.gBoard[myChips[i].c].x && mX < this.gBoard[myChips[i].c].x + 64 &&
+                   mY > this.gBoard[myChips[i].c].y && mY < this.gBoard[myChips[i].c].y + 64){
+                    this.chipToMove = myChips[i];
+                    console.log(this.chipToMove);
+                }
+            }
+            if(this.chipToMove !== null){
+
+            }
+        }
+    },
+    movechip: function(){},
     /**
      * create map creates the map for the game board
      */
@@ -88,21 +121,25 @@ gameScene.prototype = {
         }
     },
     /**
-     * display the plyer and opponent chips on the screen
+     * display the player and opponent chips on the screen
      */
     displayChips: function(){
         for(var i = 0; i<myChips.length; i++){
             if(locations[gameKey].p1 === name) {
-                this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 3);
+                this.game.add.image(this.gBoard[myChips[i].c].x,this.gBoard[myChips[i].c].y,"Tiles", 3);
+                //this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 3);
             }else{
-                this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 4);
+                this.game.add.image(this.gBoard[myChips[i].c].x,this.gBoard[myChips[i].c].y,"Tiles", 4);
+                //this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 4);
             }
         }
         for(var i = 0; i<opChips.length; i++){
             if(locations[gameKey].p1 === name) {
-                this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 4);
+                this.game.add.image(this.gBoard[opChips[i].c].x,this.gBoard[opChips[i].c].y,"Tiles", 4);
+               // this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 4);
             }else{
-                this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 3);
+                this.game.add.image(this.gBoard[opChips[i].c].x,this.gBoard[opChips[i].c].y,"Tiles", 3);
+               // this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 3);
             }
         }
 
