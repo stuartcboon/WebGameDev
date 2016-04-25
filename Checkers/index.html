@@ -17,7 +17,9 @@
     <script src="JS/preload.js"></script>
     <script src="JS/menu.js"></script>
     <script src="JS/gameScene.js"></script>
-    <script src="JS/endScene.js"></script>
+    <script src="JS/loseScene.js"></script>
+    <script src="JS/winScene.js"></script>
+
     <script>
         /**
          * an anonymous self executing function, creates an instance of the Phaser game
@@ -30,7 +32,8 @@
             game.state.add('Preload', preload);
             game.state.add('MenuS', menuScene);
             game.state.add('GameS', gameScene);
-            game.state.add('EndS', endScene);
+            game.state.add('LoseS', loseScene);
+            game.state.add('WinS', winScene);
             //Starting the first state
             game.state.start("Preload");
         })();

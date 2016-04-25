@@ -31,6 +31,7 @@ menuScene.prototype = {
         this.btnT = null;
         this.iBox = null;
         this.textSize = 0;
+      
     },
     /**
      * create is used to create the initial elements on the canvas through Phaser.js

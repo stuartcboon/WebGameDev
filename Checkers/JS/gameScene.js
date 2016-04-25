@@ -65,7 +65,7 @@ gameScene.prototype = {
      * createButton creates the button for players to resign
      */
     createButton: function(){
-        this.btn = this.game.add.button(this.game.width * 0.82, this.game.height * 0.5, 'Btn', this.endScene, this, 4, 2, 6);
+        this.btn = this.game.add.button(this.game.width * 0.82, this.game.height * 0.5, 'Btn', this.loseScene, this, 4, 2, 6);
         this.btn.width = this.game.width * 0.15;
         this.btn.height = this.game.height * 0.1;
         this.btn.anchor.setTo(0.5, 0.5);
@@ -110,7 +110,7 @@ gameScene.prototype = {
     /**
      * endScene, call the end scene state
      */
-    endScene: function(){
-        this.game.state.start('MenuS'); // should call end scene when created
+    loseScene: function(){
+        this.game.state.start('LoseS'); // should call end scene when created
     }
 };
