@@ -84,7 +84,8 @@ menuScene.prototype = {
     startGame: function(){
         checkForGame();
         $("#email").remove();
-        this.game.state.start('GameS');
+
+       // this.game.state.start('GameS');
     }
 };
 

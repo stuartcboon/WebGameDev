@@ -8,7 +8,7 @@
  * prototypes hold the methods to run the game scene.
  * game state Key "GameS"
  */
-var gameScene = function(){
+var gameScene = function(game){
     this.btn;
     this.btnT;
     this.layers;
@@ -17,6 +17,12 @@ var gameScene = function(){
     this.p2T;
     this.chipToMove;
     this.gBoard;
+    this.mX;
+    this.mY;
+    this.mouseClicked;
+    this._myChips;
+    this._opChips;
+
 };
 
 /**
@@ -34,25 +40,67 @@ gameScene.prototype = {
         this.map = null;
         this.chipToMove = null;
         this.gBoard = boardStruc;
-
+        this.mouseClicked = false;
+        this._myChips = [];
+        this._opChips = [];
+      /*  if(myChips.length === 0){
+            myChips = p1ChipSet;
+            opChips = p2ChipSet;
+        }*/
     },
     /**
      * create, creates the initial game elements
      */
     create: function(){
+        for(var i = 0; i< 12; i++){
+            this._myChips.push(myChips[i]);
+            this._opChips.push(opChips[i]);
+        }
         this.createMap();
         this.createBoard();
         this.createButton();
-
+        this.displayPlayer();
+        this.displayChips();
     },
     /**
      * update holds the game processes
      */
     update: function(){
-        this.displayPlayer();
-        this.displayChips();
+        this.checkTurn();
         this.mouselocation();
 
+
+
+    },
+    checkTurn: function(){
+        var checkChips = false;
+       // if(turn === name){
+            for(var i = 0; i < myChips.length; i++){
+                if(myChips[i].image === "" || typeof myChips[i].image === "undefined"){
+                    checkChips = true;
+                }
+                if(this._myChips[i].image !== "" && typeof this._myChips[i].image !== "undefined"){
+                    this._myChips[i].image.destroy();
+                    this._opChips[i].image.destroy();
+                    checkChips = true;
+                }
+            }
+            if(checkChips) {
+
+                for(var i = 0; i < 12; i++){
+                    this._myChips[i].c = myChips[i].c;
+                    this._myChips[i].image.x = this.gBoard[myChips[i].c].x;
+                    this._myChips[i].image.y = this.gBoard[myChips[i].c].y;
+                    this._opChips[i].c = opChips[i].c;
+                    this._opChips[i].image.x = this.gBoard[opChips[i].c].x;
+                    this._opChips[i].image.y = this.gBoard[opChips[i].c].y;
+                }
+                 this.displayChips();
+                //this._myChips = myChips;
+                //this._opChips = opChips;
+                //
+            }
+       // }
     },
     /**
      * mouselocation, checks were the mouse pointer is when the mouse button is clicked down. This is then used to
@@ -61,25 +109,38 @@ gameScene.prototype = {
      * response from the rules function.
      */
     mouselocation: function(){
-        if(game.input.mousePointer.isDown){
+        if(game.input.mousePointer.isDown) {
             // check if chip to move if not null, if null check if location has a chip assigned to it.
             // if not then forget location  chipToMove remains null, else add chip details to chipToMove
-            var mX = game.input.x;
-            var mY = game.input.y;
-            console.log("x: " + mX + " y: " + mY);
-            for(var i=0; i< myChips.length; i++){
-                if(mX > this.gBoard[myChips[i].c].x && mX < this.gBoard[myChips[i].c].x + 64 &&
-                   mY > this.gBoard[myChips[i].c].y && mY < this.gBoard[myChips[i].c].y + 64){
-                    this.chipToMove = myChips[i];
+            this.mX = game.input.x;
+            this.mY = game.input.y;
+            console.log("x: " + this.mX + " y: " + this.mY);
+            for (var i = 0; i < this._myChips.length; i++) {
+                if (this.mX > this.gBoard[this._myChips[i].c].x && this.mX < this.gBoard[this._myChips[i].c].x + 64 &&
+                    this.mY > this.gBoard[this._myChips[i].c].y && this.mY < this.gBoard[this._myChips[i].c].y + 64) {
+                    this.chipToMove = i;
+                    this.mouseClicked = true;
                     console.log(this.chipToMove);
                 }
             }
-            if(this.chipToMove !== null){
+        }
+        if(this.chipToMove !== null){
+            for(var i = 0; i < this.gBoard.length; i++){
+                if(this.mX > this.gBoard[i].x && this.mX < this.gBoard[i].x + 64 &&
+                   this.mY > this.gBoard[i].y && this.mY < this.gBoard[i].y + 64){
+                    if(this._myChips[this.chipToMove].c !== i) {
+                        this._myChips[this.chipToMove].c = i;
+                        this._myChips[this.chipToMove].image.x = this.gBoard[i].x;
+                        this._myChips[this.chipToMove].image.y = this.gBoard[i].y;
+                        turn = opponent;
+                        this.updateDB();
+                    }
+                }
 
             }
         }
+
     },
-    movechip: function(){},
     /**
      * create map creates the map for the game board
      */
@@ -111,7 +172,6 @@ gameScene.prototype = {
      * displayPlayer displays the corresponding player with the correct player 1/2.
      */
     displayPlayer: function(){
-
         if(locations[gameKey].p1 === name){
             this.p1T =  this.game.add.text(100, 0, name, {font: "40px Arial", fill: "#FFFFFF"});
             this.p2T =  this.game.add.text(100, this.game.height - 30, opponent, {font: "40px Arial", fill: "#FFFFFF"});
@@ -124,25 +184,43 @@ gameScene.prototype = {
      * display the player and opponent chips on the screen
      */
     displayChips: function(){
-        for(var i = 0; i<myChips.length; i++){
+       /* if(this._myChips.length === 0){
+            this._myChips = myChips;
+            this._opChips = opChips;
+        }*/
+        for(var i = 0; i<this._myChips.length; i++){
             if(locations[gameKey].p1 === name) {
-                this.game.add.image(this.gBoard[myChips[i].c].x,this.gBoard[myChips[i].c].y,"Tiles", 3);
-                //this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 3);
+                this._myChips[i].image = this.game.add.image(this.gBoard[this._myChips[i].c].x,this.gBoard[this._myChips[i].c].y,"Tiles", 3);
             }else{
-                this.game.add.image(this.gBoard[myChips[i].c].x,this.gBoard[myChips[i].c].y,"Tiles", 4);
-                //this.game.add.image(myChips[i].c * 64, myChips[i].r * 64, 'Tiles', 4);
+                this._myChips[i].image = this.game.add.image(this.gBoard[this._myChips[i].c].x,this.gBoard[this._myChips[i].c].y,"Tiles", 4);
             }
         }
-        for(var i = 0; i<opChips.length; i++){
+        for(var i = 0; i<this._opChips.length; i++){
             if(locations[gameKey].p1 === name) {
-                this.game.add.image(this.gBoard[opChips[i].c].x,this.gBoard[opChips[i].c].y,"Tiles", 4);
-               // this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 4);
+                this._opChips[i].image = this.game.add.image(this.gBoard[this._opChips[i].c].x,this.gBoard[this._opChips[i].c].y,"Tiles", 4);
             }else{
-                this.game.add.image(this.gBoard[opChips[i].c].x,this.gBoard[opChips[i].c].y,"Tiles", 3);
-               // this.game.add.image(opChips[i].c * 64, opChips[i].r * 64, 'Tiles', 3);
+                this._opChips[i].image = this.game.add.image(this.gBoard[this._opChips[i].c].x,this.gBoard[this._opChips[i].c].y,"Tiles", 3);
             }
         }
-
+    },
+    updateDB: function(){
+        if(locations[gameKey].p1 === name){
+            updateGameDB(gameKey, name, opponent, this.cleanArray(this._myChips), this.cleanArray(this._opChips))
+        }else{
+            updateGameDB(gameKey, opponent, name, this.cleanArray(this._opChips), this.cleanArray(this._myChips))
+        }
+    },
+    cleanArray: function(arr){
+        var tempArr = [];
+        for(var i = 0; i < arr.length; i++){
+            arr[i].image.destroy();
+            tempArr.push(arr[i]);
+            tempArr[i].image = "";
+            // tempArr[i].c = arr[i].c;
+           // tempArr[i].isQueen = arr[i].isQueen;
+           // tempArr[i].isDestroyed = arr[i].isDestroyed;
+        }
+        return tempArr;
     },
     /**
      * endScene, call the end scene state
@@ -151,3 +229,4 @@ gameScene.prototype = {
         this.game.state.start('MenuS'); // should call end scene when created
     }
 };
+

@@ -14,6 +14,8 @@
 var myChips = [],
     opChips = [];
 
+var winner = "";
+var turn = "";
 /**
  * P1ChipSet and P2ChipSet are set as constants for the game as the game start point for each chip
  * will never change.

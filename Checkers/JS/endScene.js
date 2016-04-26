@@ -6,7 +6,7 @@
  * endScene hold the functionality for the users end scene.
  * game state Key "EndS"
  */
-var endScene = function(){
+var endScene = function(game){
 
 };
 

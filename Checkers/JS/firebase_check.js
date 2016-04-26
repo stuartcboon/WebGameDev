@@ -13,12 +13,15 @@ var fb = new Firebase("https://ascheckers.firebaseio.com"),
 
 if (fb) {
     //this gets a refrerefce to the 'location' node.
-    var fbLocation = fb.child("/location");
+    var fbLocation = fb.child("/game");
     // now we can install event handler for nodes added, changed and removed.
     fbLocation.on('child_added', function (sn) {
         var data = sn.val();
         console.dir({'added': data});
         locations[sn.key()] = data;
+        setTimeout( function(){
+            game.state.start('GameS');
+        }, 3000);
     });
     fbLocation.on('child_changed', function (sn) {
         var data = sn.val();
@@ -44,11 +47,15 @@ function updateGame(){
         p2 = opponent;
         myChips = locations[gameKey].p1Chips;
         opChips = locations[gameKey].p2Chips;
+        turn = locations[gameKey].turn;
+        winner = locations[gameKey].winner;
     }else{
         p2 = name;
         p1 = opponent;
         myChips = locations[gameKey].p2Chips;
         opChips = locations[gameKey].p1Chips;
+        turn = locations[gameKey].turn;
+        winner = locations[gameKey].winner;
     }
 }
 
@@ -109,13 +116,14 @@ function addPlayer(name){
     //prevent a duplicate name
     // if(getKey(name)) return;
     // NAME IS VALID - GO AHEAD AND ADD IT...
-    fb.child("/location").push({
+    fb.child("/game").push({
         p1: name,
         p1Chips: p1ChipSet,
         p2: "",
         p2Chips: p2ChipSet,
         status: false,
-        winner: "",
+        winner: winner,
+        turn: name,
         timestamp: Firebase.ServerValue.TIMESTAMP
     }, function(err){
         if(err){
@@ -131,13 +139,14 @@ function updatePlayers(ref,p1,p2,p1C,p2C) {
     //prevent a duplicate name
     // if (getKey(name)) return;
     // NAME IS VALID - GO AHEAD AND ADD IT...
-    fb.child("/location/" + ref).set({
+    fb.child("/game/" + ref).set({
         p1: p1,
         p1Chips: p1ChipSet,
         p2: p2,
         p2Chips: p2ChipSet,
         status: true,
-        winner: "",
+        winner: winner,
+        turn: p1,
         timestamp: Firebase.ServerValue.TIMESTAMP
     }, function (err) {
         if (err) {
@@ -146,7 +155,22 @@ function updatePlayers(ref,p1,p2,p1C,p2C) {
     });
 }
 
-
+function updateGameDB(ref, p1, p2, p1C, p2C){
+    fb.child("/game/" + ref).set({
+        p1: p1,
+        p1Chips: p1C,
+        p2: p2,
+        p2Chips: p2C,
+        status: true,
+        winner: winner,
+        turn: turn,
+        timestamp: Firebase.ServerValue.TIMESTAMP
+    }, function (err) {
+        if (err) {
+            console.dir(err);
+        }
+    });
+}
 /**
  * when button to start game is clicked, check to see if a game exist that player can join
  * if no game exists then create game.
