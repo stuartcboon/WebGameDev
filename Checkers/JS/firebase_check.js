@@ -111,19 +111,9 @@ function addPlayer(name){
     // NAME IS VALID - GO AHEAD AND ADD IT...
     fb.child("/location").push({
         p1: name,
-        p1Chips: [{c:2, r:3, isQueen: false, isDestroyed: false},{c:4, r:3, isQueen: false, isDestroyed: false},
-            {c:6, r:3, isQueen: false, isDestroyed: false},{c:8, r:3, isQueen: false, isDestroyed: false},
-            {c:1, r:2, isQueen: false, isDestroyed: false},{c:3, r:2, isQueen: false, isDestroyed: false},
-            {c:5, r:2, isQueen: false, isDestroyed: false},{c:7, r:2, isQueen: false, isDestroyed: false},
-            {c:2, r:1, isQueen: false, isDestroyed: false},{c:4, r:1, isQueen: false, isDestroyed: false},
-            {c:6, r:1, isQueen: false, isDestroyed: false},{c:8, r:1, isQueen: false, isDestroyed: false}],
+        p1Chips: p1ChipSet,
         p2: "",
-        p2Chips: [{c:1, r:6, isQueen: false, isDestroyed: false},{c:3, r:6, isQueen: false, isDestroyed: false},
-            {c:5, r:6, isQueen: false, isDestroyed: false},{c:7, r:6, isQueen: false, isDestroyed: false},
-            {c:2, r:7, isQueen: false, isDestroyed: false},{c:4, r:7, isQueen: false, isDestroyed: false},
-            {c:6, r:7, isQueen: false, isDestroyed: false},{c:8, r:7, isQueen: false, isDestroyed: false},
-            {c:1, r:8, isQueen: false, isDestroyed: false},{c:3, r:8, isQueen: false, isDestroyed: false},
-            {c:5, r:8, isQueen: false, isDestroyed: false},{c:7, r:8, isQueen: false, isDestroyed: false}],
+        p2Chips: p2ChipSet,
         status: false,
         winner: "",
         timestamp: Firebase.ServerValue.TIMESTAMP
@@ -143,19 +133,9 @@ function updatePlayers(ref,p1,p2,p1C,p2C) {
     // NAME IS VALID - GO AHEAD AND ADD IT...
     fb.child("/location/" + ref).set({
         p1: p1,
-        p1Chips: [{c:2, r:3, isQueen: false, isDestroyed: false},{c:4, r:3, isQueen: false, isDestroyed: false},
-            {c:6, r:3, isQueen: false, isDestroyed: false},{c:8, r:3, isQueen: false, isDestroyed: false},
-            {c:1, r:2, isQueen: false, isDestroyed: false},{c:3, r:2, isQueen: false, isDestroyed: false},
-            {c:5, r:2, isQueen: false, isDestroyed: false},{c:7, r:2, isQueen: false, isDestroyed: false},
-            {c:2, r:1, isQueen: false, isDestroyed: false},{c:4, r:1, isQueen: false, isDestroyed: false},
-            {c:6, r:1, isQueen: false, isDestroyed: false},{c:8, r:1, isQueen: false, isDestroyed: false}],
+        p1Chips: p1ChipSet,
         p2: p2,
-        p2Chips: [{c:1, r:6, isQueen: false, isDestroyed: false},{c:3, r:6, isQueen: false, isDestroyed: false},
-            {c:5, r:6, isQueen: false, isDestroyed: false},{c:7, r:6, isQueen: false, isDestroyed: false},
-            {c:2, r:7, isQueen: false, isDestroyed: false},{c:4, r:7, isQueen: false, isDestroyed: false},
-            {c:6, r:7, isQueen: false, isDestroyed: false},{c:8, r:7, isQueen: false, isDestroyed: false},
-            {c:1, r:8, isQueen: false, isDestroyed: false},{c:3, r:8, isQueen: false, isDestroyed: false},
-            {c:5, r:8, isQueen: false, isDestroyed: false},{c:7, r:8, isQueen: false, isDestroyed: false}],
+        p2Chips: p2ChipSet,
         status: true,
         winner: "",
         timestamp: Firebase.ServerValue.TIMESTAMP
