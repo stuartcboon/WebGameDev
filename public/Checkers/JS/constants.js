@@ -14,6 +14,9 @@
 var myChips = [],
     opChips = [];
 
+/**
+ * these are string variables to hold the currently active player and the winner of the game when required
+ */
 var winner = "";
 var turn = "";
 /**

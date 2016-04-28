@@ -21,10 +21,11 @@ preload.prototype = {
      * images and audio files
      */
     preload: function(){
-        this.game.load.tilemap('map', '../Checkers/Assets/Images/CBoard.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.spritesheet('Tiles','../Checkers/Assets/Images/CBoard.png', 64, 64, 5);
-        this.game.load.image('BG','../Checkers/Assets/Images/background.png');
-        this.game.load.spritesheet('Btn','../Checkers/Assets/Images/Buttons/buttons.png', 300, 80);
+        this.game.load.tilemap('map', 'Checkers/Assets/Images/CBoard.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.spritesheet('Tiles','Checkers/Assets/Images/CBoard.png', 64, 64, 5);
+        this.game.load.spritesheet('Q','Checkers/Assets/Images/queens.png', 64, 64, 2);
+        this.game.load.image('BG','Checkers/Assets/Images/background.png');
+        this.game.load.spritesheet('Btn','Checkers/Assets/Images/Buttons/buttons.png', 300, 80);
     },
     /**
      * prototype create calls the required functions, this is called in

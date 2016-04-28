@@ -19,9 +19,6 @@ if (fb) {
         var data = sn.val();
         console.dir({'added': data});
         locations[sn.key()] = data;
-        setTimeout( function(){
-            game.state.start('GameS');
-        }, 3000);
     });
     fbLocation.on('child_changed', function (sn) {
         var data = sn.val();
@@ -100,17 +97,19 @@ function getKey(){
 
 /**
  * Get the opponents name using the key
+ * @param key {String} Holds the key to the location of the game
+ * @returns {String} Name of player 1
  */
-function getOpponent(key, name){
+function getOpponent(key){
     // for(key in locations){
     if(locations[key].status === false){
         return locations[key].p1;
     }
-    // }
 }
 
 /**
  * creates a new game on the database for an opponent to join, initialises the player chips
+ * @param name {String} Holds the name of the first player
  */
 function addPlayer(name){
     //prevent a duplicate name
@@ -134,8 +133,11 @@ function addPlayer(name){
 
 /**
  * updates the game after every turn of the game including the first instance of joining a game.
+ * @param ref {String} Holds the key of the current game being played
+ * @param p1 {String} Holds player 1's name
+ * @param p2 {String} Holds player 2's name
  */
-function updatePlayers(ref,p1,p2,p1C,p2C) {
+function updatePlayers(ref,p1,p2) {
     //prevent a duplicate name
     // if (getKey(name)) return;
     // NAME IS VALID - GO AHEAD AND ADD IT...
@@ -155,6 +157,14 @@ function updatePlayers(ref,p1,p2,p1C,p2C) {
     });
 }
 
+/**
+ * updates the game when ever a change has been made to the game by either player
+ * @param ref {String} Holds the key of the current game being played
+ * @param p1 {String} Holds player 1's name
+ * @param p2 {String} Holds player 2's name
+ * @param p1C {Object} Holds player 1 chip set
+ * @param p2C {Object} Holds Player 2 chip set
+ */
 function updateGameDB(ref, p1, p2, p1C, p2C){
     fb.child("/game/" + ref).set({
         p1: p1,
@@ -185,4 +195,12 @@ function checkForGame(){
         addPlayer(name);
     }
     gameKey = setKey();
+}
+
+/**
+ * this destroys the game from the database and keeps the number of active game to a minimum
+ * @param ref {String} Holds the string value of the gameKey so the correct game can be destroyed
+ */
+function removeGame(ref){
+    fb.child("/game/" + ref).remove();
 }
