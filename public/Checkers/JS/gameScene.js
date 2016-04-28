@@ -25,6 +25,7 @@ var gameScene = function(game){
     this.destroyChip;
     this.noDestroyed
     this.turn;
+    this.endSceneCalled;
 };
 
 /**
@@ -47,7 +48,9 @@ gameScene.prototype = {
         this._opChips = [];
         this.destroyChip = null;
         this.turn = "";
+        this.endSceneCalled = false;
         winner = "";
+
     },
     /**
      * create, creates the initial game elements
@@ -73,15 +76,11 @@ gameScene.prototype = {
             this.checkOpChips();
             this.queening();
         }else{
-            if(winner === name){
-                this.endScene();
-            }else{
-                this.endScene();
-            }
+           if(!this.endSceneCalled) {
+               this.endSceneCalled = true;
+               this.endScene();
+           }
         }
-
-
-
     },
     /**
      * When the player of the corresponding name enters one of the given cell numbers of the gBoard they
@@ -464,7 +463,11 @@ gameScene.prototype = {
      * this is activated when the player clicks on the resign button during a game
      */
     resign: function(){
-        winner = opponent;
+        if(opponent === ""){
+            winner = "noBody";
+        }else {
+            winner = opponent;
+        }
         this.updateDB();
     },
     /**
@@ -472,7 +475,12 @@ gameScene.prototype = {
      */
     endScene: function(){
         removeGame(gameKey);
-        this.game.state.start('MenuS'); // should call end scene when created
+        if(winner === name){
+            this.game.state.start('EndSW');
+        }else{
+            this.game.state.start('EndSL');
+        }
+       // this.game.state.start('MenuS'); // should call end scene when created
     }
 };
 

@@ -8,8 +8,8 @@
   */
 
 // note - put all this code inside the <script> tags
-var fb = new Firebase("https://ascheckers.firebaseio.com"),
-    locations = {};
+    var fb = new Firebase("https://ascheckers.firebaseio.com"),
+        locations = {};
 
 if (fb) {
     //this gets a refrerefce to the 'location' node.

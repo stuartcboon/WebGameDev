@@ -26,6 +26,9 @@ preload.prototype = {
         this.game.load.spritesheet('Q','Checkers/Assets/Images/queens.png', 64, 64, 2);
         this.game.load.image('BG','Checkers/Assets/Images/background.png');
         this.game.load.spritesheet('Btn','Checkers/Assets/Images/Buttons/buttons.png', 300, 80);
+
+        this.game.load.image('youWin','Checkers/Assets/Images/youWin.png');
+        this.game.load.image('youLose','Checkers/Assets/Images/youLose.png');
     },
     /**
      * prototype create calls the required functions, this is called in

@@ -1,0 +1,30 @@
+CACHE MANIFEST
+# 2016-04-26:v1
+
+# game elements fo caching
+CACHE:
+index.html
+
+Checkers/Assets/Images/background.png
+Checkers/Assets/Images/cBoard.json
+Checkers/Assets/Images/cBoard.png
+Checkers/Assets/Images/queens.png
+Checkers/Assets/Images/youLose.png
+Checkers/Assets/Images/youWin.png
+Checkers/Assets/Images/Buttons/buttons.png
+
+Checkers/JS/constants.js
+Checkers/JS/firebase_check.js
+Checkers/JS/gameScene.js
+Checkers/JS/loseScene.js
+Checkers/JS/menu.js
+Checkers/JS/preload.js
+Checkers/JS/winScene.js
+
+Checkers/library/phaser.js
+Checkers/library/phaser.min.js
+
+# Resources that require the user to be online.
+NETWORK:
+*
+

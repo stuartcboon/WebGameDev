@@ -82,6 +82,9 @@ menuScene.prototype = {
         }else if(i === 1){
             this.message = game.add.text(this.game.width * 0.5, 200 , 'Name already in use', {font: this.textSize + "px Arial", fill: "#FFFFFF"});
             this.message.anchor.setTo(0.5, 0);
+        }else if(i === 1) {
+            this.message = game.add.text(this.game.width * 0.5, 200, 'Please connect to the internet and refresh page', {font: this.textSize + "px Arial", fill: "#FFFFFF"});
+            this.message.anchor.setTo(0.5, 0);
         }
     },
     /**
