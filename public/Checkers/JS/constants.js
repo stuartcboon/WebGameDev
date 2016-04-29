@@ -41,6 +41,7 @@ var p2ChipSet = [{c:40, isQueen: false, isDestroyed: false},{c:42, isQueen: fals
  * boardStruc has been set to a constant as the board structure will never change shape.
  * @type {Array}
  */
+
 var boardStruc = [{x: 64, y: 64},{x: 128, y: 64},{x: 192, y: 64},{x: 256, y: 64},{x: 320, y: 64},{x: 384, y: 64},{x: 448, y: 64},{x: 512, y: 64},
     {x: 64, y: 128},{x: 128, y: 128},{x: 192, y: 128},{x: 256, y: 128},{x: 320, y: 128},{x: 384, y: 128},{x: 448, y: 128},{x: 512, y: 128},
     {x: 64, y: 192},{x: 128, y: 192},{x: 192, y: 192},{x: 256, y: 192},{x: 320, y: 192},{x: 384, y: 192},{x: 448, y: 192},{x: 512, y: 192},

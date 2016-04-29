@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2016-04-26:v1
+# 2016-04-26:v1.2
 
 # game elements fo caching
 CACHE:

@@ -166,7 +166,9 @@ gameScene.prototype = {
      * @returns {boolean} Returns true/false depending on the analysis of the if statement
      */
     checkTurn: function(){
-
+        if(this.turn !== ""){
+            this.turn.destroy();
+        }
         this.turn = this.game.add.text(this.game.width * 0.73, 200, "Current Player \n" + locations[gameKey].turn, {font: "20px Courier New", fill: "#FFFFFF", align: "center"});
         if(locations[gameKey].turn === name) {
             return true;
@@ -313,7 +315,7 @@ gameScene.prototype = {
      */
     mouselocation: function(){
         if(this.checkTurn()) { // ensures only the currently active player is able to move a chip
-            if (game.input.mousePointer.isDown) {
+            if (game.input.mousePointer.isDown || game.input.pointer1.isDown) {
                 // check if chip to move if not null, if null check if location has a chip assigned to it.
                 // if not then forget location  chipToMove remains null, else add chip details to chipToMove
                 this.mX = game.input.x;
